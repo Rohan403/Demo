@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+.container{
+    text-align: center;
+}
+table{
+    border: 1px solid;
+}
+th{
+    border: 1px solid;
+}
+td{
+    border: 1px solid;
+}
