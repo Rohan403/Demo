@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>My API</title>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <h2>Form</h2>
+  <div class="add-post-form">
+    <div class="container">
+      <div class="row">
+        <div class="searchInput">
+          <input type="text" onkeyup="Searchdata(this.value)" class="form-control" placeholder="Search"><br /><br />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="First name" aria-label="First name" id="names">
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="usernames" aria-label="Last name" id="username"><br />
+        <p id="msg"></p>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="website" aria-label="First name" id="website">
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="company name" aria-label="Last name"
+          id="companyname"><br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="phonenumber" aria-label="First name" id="phoneno"><br />
+        <p id="msg2"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="email" aria-label="First name" id="email"><br />
+        <p id="msg3"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="latitude" aria-label="First name" id="latitude"><br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="longitude" aria-label="First name" id="longitude"><br />
+      </div>
+    </div>
+    <div class="col-13">
+      <button type="submit" class="btn btn-primary" onclick="validate()">Add</button>
+      <button type="submit" id="update" onclick="updateData()" style="display: none;">Update</button>
+      <button id="cancelButton" onclick="cancelUpdate()"> Refresh </button>
+    </div>
+  </div>
+  <div id="posts-list">
+
+  </div>
+
+  <div id="photolist">
+
+  </div>
+  <!--Show Thumbnail Modal -->
+  <button type="button" id="thumbModalBtn" class="d-none" data-bs-toggle="modal"
+    data-bs-target="#thumbnailModal"></button>
+
+  <div class="modal fade" id="thumbnailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="thumbnailImage" src="" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Show Post Modal -->
+  <button type="button" id="postBtn" class="d-none" data-bs-toggle="modal" data-bs-target="#postModal"></button>
+
+  <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="postshowed">This is your post</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
