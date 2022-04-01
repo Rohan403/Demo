@@ -73,11 +73,11 @@ if(localStorage.getItem('postdetails')==null){
     fetch (url)
     .then((res) => res.json())
     .then((data) => {
-        let posts = data;
+        let posts = data.slice(0,10);
         for(var i in posts){
-            let title = posts[i].id;
+            let title = posts[i].title;
             let body = posts[i].body;
-            let userId = posts[i].body
+            let userId = posts[i].userId;
             post.push({
                 "title" : title,
                 "body" : body,
@@ -97,7 +97,7 @@ localStorage.setItem('arr',JSON.stringify(arr));
 showApiData();
 let postoutput = new Array();
 postoutput = JSON.parse(localStorage.getItem('postoutput')) ? JSON.parse(localStorage.getItem('postoutput')) : [];
-postoutput = post.map((item,i) => Object.assign({},item,post[i]));
+postoutput = arr.map((item,i) => Object.assign({},item,post[i]));
 localStorage.setItem('postoutput',JSON.stringify(postoutput))
      function showApiData(){
         let users_details = new Array();
@@ -271,9 +271,9 @@ localStorage.setItem('postoutput',JSON.stringify(postoutput))
                // console.log(detail)
                 search += `
                 <div class="card" id="cardbody" style="width: 25rem; border-style: dashed; padding=10px; float:right">
-                 
+                <img src="${photo[i].thumbnailUrl}" onclick="showphoto(${i})"height=80px; width=75px";/>
                 <div class="card-body" id="cardbody" style="padding=10px;">
-                &nbsp;<b>Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span <h5 class="card-title">${user_details[i].name}</h5> <br>
+                &nbsp;<b>Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span <h5 class="card-title">${user_details[i].name}</h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;<b>username:</b>&nbsp;<span<h5  class="card-title">${user_details[i].username}</h5><br>
                 &nbsp;<b>Phone:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span<h5  class="card-title">${user_details[i].phoneno}</h5><br>
                 &nbsp;<b>Website:</b>&nbsp;&nbsp;&nbsp;<span <p class="card-text">${user_details[i].website}</p><br>
@@ -282,14 +282,13 @@ localStorage.setItem('postoutput',JSON.stringify(postoutput))
                 &nbsp;<b>latitude :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span<h5  class="card-title">${user_details[i].latitude}</h5><br>
                 &nbsp;<b>longitude:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span<h5  class="card-title">${user_details[i].longitude}</h5><br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="editData(${i})" class="btn btn-primary" style=" padding: 5px;">Edit</a>&nbsp;&nbsp;<a href onclick="deleteData(${i})" class="btn btn-primary" style=" padding: 5px;">Delete</a>&nbsp;&nbsp;
-                <img src="${user_details[i].thumbnailUrl}" onclick="showphoto(${i})" data-target="#example"/>
-                <span<h5  class="card-title">${user_details[i].id}</h5><br><span<h5  class="card-title">${user_details[i].url}</h5><br>
+                <a href="javascript:void(0)" onclick="showpost(${i})" class="btn btn-primary" style=" padding: 5px;">Post</a>
                 </div>
-                </div> <br>`
+                </div> <br> `
     
             }
         }
-        document.querySelector('.posts-list').innerHTML = search;
+        list.innerHTML = search;
     }
 
 
@@ -298,15 +297,44 @@ localStorage.setItem('postoutput',JSON.stringify(postoutput))
 // localStorage.setItem(('finall'),JSON.stringify(output))
 // output = arr.map((item,i) => Object.assign({},item,photo[i]));
 
-function showphoto(index){
-    var url = JSON.parse(localStorage.getItem('arr'))[index].thumbnailUrl
+    function showphoto(index){
+    var url = JSON.parse(localStorage.getItem('arr'))[index].url
     document.getElementById('thumbnailImage').src = url;
     document.getElementById('thumbModalBtn').click();  
-}
-function showpost(index){
-    var url = JSON.parse(localStorage.getItem('postoutput'))[index].body
-    var titles = JSON.parse(localStorage.getItem('postoutput'))[index].title
+    }
+    function showpost(index){    
+        let url = []
+        var result = Object.values(postoutput).map(Object.values)
+        localStorage.getItem('resultss',JSON.stringify(result))
+        console.log(result)
+         result.forEach(function(results) { 
+            url += `<div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">${results[8]}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Title:-${results[11]}</h6>
+              <p class="card-text">Body:-${results[12]}</p>
+              <button style="background-color: grey;" id="editpost" onclick="editContent()">Edit</button>
+              <button style="background-color: grey;" id="updatepost" onclick="update11()">update</button>
+            </div>
+          </div>`;
+          }); 
+          localStorage.setItem('resultss',JSON.stringify(result))
+         document.getElementById("postshowed").innerHTML = url;
+        document.getElementById('postBtn').click();
+   }
+   function editcard(rid) {
+    var result = JSON.parse(localStorage.getItem('resultss'))
+    console.log(result)
+    var url = result[rid].body
+    var titles = result[rid].title
     document.getElementById('postshowed').innerHTML = url;
     document.querySelector('.modal-title').innerHTML = titles
     document.getElementById('postBtn').click();
+   }
 }
+   function deletecard(results){
+    let output = JSON.parse(localStorage.getItem('output'))
+    output.splice(results,1)
+    localStorage.setItem('output',JSON.stringify(output))
+    location.reload()
+   }
