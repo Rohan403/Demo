@@ -186,20 +186,16 @@ function updateData() {
   document.getElementById("longitude").value = "";
 }
 function cancelUpdate() {
-  // document.getElementById('cancelButton').style = "display:none";
   document.getElementById("update").style = "display:none";
-  //document.getElementById('addButton').disabled = false;
   document.getElementById("email").disabled = false;
   document.querySelector(".btn").style = "display:visible";
   id = null;
   ClearAll();
-  //location.reload()
 }
 function validate() {
   let msg = document.getElementById("msg");
   let msg2 = document.getElementById("msg2");
   let msg3 = document.getElementById("msg3");
-  //document.getElementById('cancelButton').style = "display:none";
   document.getElementById("update").style = "display:none";
   let username1 = document.getElementById("username").value;
   if (username1 == "") {
@@ -264,12 +260,6 @@ function validate() {
   ClearAll();
 }
 function ClearAll() {
-  // let msg =  document.getElementById('msg');
-  // let msg2 = document.getElementById('msg2');
-  // let msg3 = document.getElementById('msg3');
-  // msg.innerHTML = ''
-  // msg2.innerHTML = ''
-  // msg3.innerHTML = ''
   document.getElementById("names").value = "";
   document.getElementById("username").value = "";
   document.getElementById("phoneno").value = "";
@@ -283,8 +273,6 @@ function Searchdata(temp) {
   var search = "";
   for (var i = 0; i < user_details.length; i++) {
     if (user_details[i].name.toLowerCase().includes(temp.toLowerCase())) {
-      //var detail = user_details[i];
-      // console.log(detail)
       search += `
                 <div class="card" id="cardbody" style="width: 25rem; border-style: dashed; padding=10px; float:right">
                 <img src="${photo[i].thumbnailUrl}" onclick="showphoto(${i})"height=80px; width=75px";/>
@@ -305,41 +293,29 @@ function Searchdata(temp) {
   }
   list.innerHTML = search;
 }
-
-// let output1 = new Array();
-// output1 = JSON.parse(localStorage.getItem('output')) ? JSON.parse(localStorage.getItem('output')) : []
-// localStorage.setItem(('finall'),JSON.stringify(output))
-// output = arr.map((item,i) => Object.assign({},item,photo[i]));
-
 function showphoto(index) {
   var url = JSON.parse(localStorage.getItem("arr"))[index].url;
   document.getElementById("thumbnailImage").src = url;
   document.getElementById("thumbModalBtn").click();
 }
-// function showpost(index){
-
-//         var url = JSON.parse(localStorage.getItem('postoutput'))[index].body
-//         mapping = JSON.parse(localStorage.getItem('postoutput'))
-//         var titles = JSON.parse(localStorage.getItem('postoutput'))[index].title
-//         document.getElementById('postshowed').innerHTML = url;
-//         document.querySelector('.modal-title').innerHTML = titles
-//         document.getElementById('postBtn').click();
-// }
 var result = Object.values(postoutput).map(Object.values);
 function showpost(index) {
   let url = [];
 
   localStorage.getItem("resultss", JSON.stringify(result));
-  // console.log(result)
-  result.forEach(function (results) {
+  post.forEach(function (results, index) {
     url += `<div class="card" style="width: 18rem;">
             <div class="card-body">
-              <h5 class="card-title">${results[8]}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Title:-${results[11]}</h6>
-              <p class="card-text">Body:-${results[12]}</p>
-              <button style="background-color: grey;" id="editpost" onclick="editContent()">Edit</button>
-              <button style="background-color: grey;" id="updatepost" onclick="update11()">update</button>
-             <button style="background-color: grey;" id="deletepost" onclick="deletecard()">Delete</button>
+              <h5 class="card-title">${index + 1}</h5>
+              <h6 class="card-subtitle mb-2 text-muted" id="psot-tit${index}">Title:-${
+      results.title
+    }</h6>
+              <p class="card-text" id="psot-desc${index}">Body:-${
+      results.body
+    }</p>
+              <button style="background-color: grey;" id="editpost" onclick="editContent(${index})">Edit</button>
+              <button style="background-color: grey;" id="updatepost" onclick="update11(${index})">update</button>
+             <button style="background-color: grey;" id="deletepost" onclick="deletecard(${index})">Delete</button>
             </div>
           </div>`;
   });
@@ -348,34 +324,41 @@ function showpost(index) {
   document.getElementById("postBtn").click();
 }
 para11 = document.getElementById("postshowed");
-function editContent() {
+function editContent(index) {
   para11.contentEditable = true;
-  para11.style.backgroundColor = "#dddbdb";
-  // event.target.parentElement.setAttribute("contentEditable", true);
-
-  //localStorage.getItem('resultss',JSON.stringify(result))
+  para11.style.backgroundColor = "#ffff";
 }
-function update11() {
+function update11(index) {
   para11.contentEditable = false;
-  para11.style.backgroundColor = "#ffe44d";
-  //localStorage.getItem('resultss',JSON.stringify(result))
+  post_des = document.getElementById(`psot-desc${index}`).innerHTML.slice(6);
+  post_tit = document.getElementById(`psot-tit${index}`).innerHTML.slice(7);
+  post[index].title = post_tit;
+  post[index].body = post_des;
+  localStorage.setItem("postdetails", JSON.stringify(post));
+  para11.style.backgroundColor = "#ffff";
 }
-// var titles = result[rid].title
-// document.getElementById('postshowed').innerHTML = url;
-// document.querySelector('.modal-title').innerHTML = titles
-// document.getElementById('postBtn').click();
-function deletecard() {
-  // result.forEach(function(results){
-  //     results.splice(results[12],1)
-  //     console.log(results)
-  // })
+function deletecard(index) {
+  result.splice(index, 1);
+  postoutput.splice(index, 1);
+  post.splice(index, 1);
+  showpost()
+  localStorage.setItem("resultss", JSON.stringify(result));
+  localStorage.setItem("postdetails", JSON.stringify(post));
   var elements = document.querySelectorAll(".card-text");
-//   for (var i = 0, len = elements.length; i < len; i++) {
-//    // elements[i].parentNode.removeChild(elements[i]);
-
-   
-//   }
   console.log(elements[0].userId);
-  
 }
-//  function deletecard(){  //delete card
+function postadd(){
+    postupdate = JSON.parse(localStorage.getItem("postdetails"))
+    ? JSON.parse(localStorage.getItem("postdetails"))
+    : [];
+   var ids = document.getElementById('id1')
+   var title2 = document.getElementById('title1')
+   var body2 = document.getElementById('body3')
+ postupdate.push({
+	id : ids.value,
+	title:title2.value,
+	body:body2.value,
+    });
+localStorage.setItem("postdetails" , JSON.stringify(postupdate) );
+showpost()
+}

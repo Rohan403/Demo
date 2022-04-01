@@ -75,6 +75,9 @@
   <div id="photolist">
 
   </div>
+  <div id="postadd" style="display:none">
+   
+  </div>
   <!--Show Thumbnail Modal -->
   <button type="button" id="thumbModalBtn" class="d-none" data-bs-toggle="modal"
     data-bs-target="#thumbnailModal"></button>
@@ -82,12 +85,7 @@
   <div class="modal fade" id="thumbnailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <img id="thumbnailImage" src="" />
-        </div>
+          <img id="thumbnailImage" src="" data-bs-dismiss="modal" aria-label="Close" />
       </div>
     </div>
   </div>
@@ -98,7 +96,13 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title"><button type="button" c data-bs-dismiss="modal" >Add</button></h5>
+          <div>
+            <input type="text" id="id1" placeholder="Enter Id" /><br/>
+            <input type="text" id="title1" placeholder="Enter title" /><br/>
+            <input type="text" id="body3" placeholder="Enter body" />
+            <h5 class="modal-title"><br/><button type="button" c data-bs-dismiss="modal" onclick="postadd()" >Add</button></h5>
+          </div>
+         
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
